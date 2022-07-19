@@ -1,0 +1,76 @@
+$mainColor: #222;
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+*,
+*::after,
+*::before {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.clock-face {
+  width: 20vw;
+  height: 20vw;
+  border-radius: 50%;
+  box-shadow: 0 0 2.5vw 0.25vw $mainColor;
+  position: relative;
+
+  &__dash {
+    position: absolute;
+    width: 0.4%;
+    height: 50%;
+    transform-origin: bottom center;
+    left: 49.8%;
+    &::before {
+      content: '';
+      position: absolute;
+      background: rgba($mainColor, 0.7);
+      box-shadow: 0 0 0.35vw rgba($mainColor, 0.5);
+      top: 11%;
+      height: 16%;
+      width: 100%;
+    }
+    @for $i from 1 through 12 {
+      &._#{$i} {
+        transform: rotate(#{$i * 30}deg);
+      }
+    }
+  }
+
+  &__arrow {
+    background: $mainColor;
+    position: absolute;
+    bottom: 50%;
+    border-radius: 100% 100% 0 0;
+    transform-origin: bottom center;
+    &_hours {
+      left: 49%;
+      width: 2%;
+      height: 25%;
+    }
+    &_minutes {
+      left: 49.5%;
+      width: 1%;
+      height: 35%;
+    }
+    &_seconds {
+      left: 49.75%;
+      width: 0.5%;
+      height: 40%;
+    }
+  }
+}
