@@ -14,12 +14,31 @@ code {
     monospace;
 }
 
+// works for selectors with position:absolute
+@mixin centerBySize($width, $height: null) {
+  @if $width {
+    width: $width;
+    left: calc(50% - #{$width} / 2);
+  }
+
+  @if $height {
+    height: $height;
+    top: calc(50% - #{$height} / 2);
+  }
+}
+
 *,
 *::after,
 *::before {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
+}
+
+.clock {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .clock-face {
@@ -30,11 +49,10 @@ code {
   position: relative;
 
   &__dash {
+    @include centerBySize(0.4%);
     position: absolute;
-    width: 0.4%;
     height: 50%;
     transform-origin: bottom center;
-    left: 49.8%;
     &::before {
       content: '';
       position: absolute;
@@ -58,19 +76,24 @@ code {
     border-radius: 100% 100% 0 0;
     transform-origin: bottom center;
     &_hours {
-      left: 49%;
-      width: 2%;
+      @include centerBySize(2%);
       height: 25%;
     }
     &_minutes {
-      left: 49.5%;
-      width: 1%;
+      @include centerBySize(1%);
       height: 35%;
     }
     &_seconds {
-      left: 49.75%;
-      width: 0.5%;
+      @include centerBySize(0.5%);
       height: 40%;
     }
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    border-radius: 50%;
+    background: $mainColor;
+    @include centerBySize(5%, 5%);
   }
 }

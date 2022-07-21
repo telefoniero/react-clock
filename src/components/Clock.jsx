@@ -9,10 +9,16 @@ function Clock({ region }) {
     return ((value % q) * 360) / q
   }
 
+  const dashes = Array(12)
+    .fill(1)
+    .map((el, idx) => (
+      <div key={idx} className={`clock-face__dash _${idx + 1}`} />
+    ))
+
   return (
-    <div>
-      {time}
-      <div className='clock-face'>
+    <div className='clock'>
+      <div className='clock__display'>{time}</div>
+      <div className='clock__clock-face clock-face'>
         <div
           className='clock-face__arrow clock-face__arrow_hours'
           style={{ transform: `rotate(${convertToDegrees(hours, 12)}deg)` }}
@@ -25,18 +31,7 @@ function Clock({ region }) {
           className='clock-face__arrow clock-face__arrow_seconds'
           style={{ transform: `rotate(${convertToDegrees(seconds, 60)}deg)` }}
         />
-        <div className='clock-face__dash _1'></div>
-        <div className='clock-face__dash _2'></div>
-        <div className='clock-face__dash _3'></div>
-        <div className='clock-face__dash _4'></div>
-        <div className='clock-face__dash _5'></div>
-        <div className='clock-face__dash _6'></div>
-        <div className='clock-face__dash _7'></div>
-        <div className='clock-face__dash _8'></div>
-        <div className='clock-face__dash _9'></div>
-        <div className='clock-face__dash _10'></div>
-        <div className='clock-face__dash _11'></div>
-        <div className='clock-face__dash _12'></div>
+        {dashes}
       </div>
     </div>
   )

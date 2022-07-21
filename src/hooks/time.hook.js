@@ -8,5 +8,5 @@ export default function useTime(region) {
     if (!timer) setTimer(setInterval(() => setDate(new Date()), 1000))
   }, [timer])
 
-  return { time: date.toLocaleTimeString('ru', { timeZone: 'UTC' }) }
+  return { time: date.toLocaleTimeString('ru') }
 }
