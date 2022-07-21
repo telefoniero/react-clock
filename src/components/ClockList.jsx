@@ -2,7 +2,11 @@ import { useState } from 'react'
 import Clock from './Clock'
 
 export default function ClockList() {
-  const [regions, setRegions] = useState([])
+  const [regions, setRegions] = useState([
+    {
+      id: Math.random()
+    }
+  ])
   const [region, setRegion] = useState('')
 
   function clickHandler() {
@@ -18,7 +22,7 @@ export default function ClockList() {
       <ul className='clock-list'>
         {regions.map(r => (
           <li className='clock-list__item' key={r.id}>
-            <Clock region={r.name} />
+            <Clock />
           </li>
         ))}
       </ul>
