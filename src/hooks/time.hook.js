@@ -6,16 +6,10 @@ export default function useTime(timeZone) {
 
   useEffect(() => {
     if (!timer) {
-      // console.log('date ms: ', date.getMilliseconds())
+      const offset = 1000 - date.getMilliseconds()
       setTimeout(() => {
-        setTimer(
-          setInterval(() => {
-            const newDate = new Date()
-            // console.log('offset date ms: ', newDate.getMilliseconds())
-            setDate(newDate)
-          }, 1000)
-        )
-      }, 1000 - date.getMilliseconds())
+        setTimer(setInterval(() => setDate(new Date()), 1000))
+      }, offset)
     }
   }, [timer, date])
   return { time: date.toLocaleTimeString('ru', { timeZone }) }

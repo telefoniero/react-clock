@@ -48,6 +48,7 @@ html {
   display: flex;
   flex-direction: column;
   align-items: center;
+  font-size: 1.5rem;
   &__display {
     margin-bottom: 1em;
   }
@@ -63,18 +64,13 @@ html {
   &__item {
     &:first-child {
       grid-column: 1/3;
-      font-size: 1.5rem;
-      & .clock-face {
-        width: 40vw;
-        height: 40vw;
-      }
     }
   }
 }
 
 .clock-face {
-  width: 30vw;
-  height: 30vw;
+  width: 40vw;
+  height: 40vw;
   border-radius: 50%;
   box-shadow: 0 0 2.5vw 0.25vw $mainColor;
   position: relative;
