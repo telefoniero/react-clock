@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import getTimezones from '../api/getTimezones'
 import Clock from './Clock'
 
 export default function ClockList() {
@@ -12,17 +13,21 @@ export default function ClockList() {
   function clickHandler() {
     const newRegion = {
       id: Math.random(),
-      name: region
+      timeZone: region
     }
     setRegions([...regions, newRegion])
   }
+
+  useEffect(() => {
+    getTimezones(region).then(res => console.log(res))
+  }, [region])
 
   return (
     <>
       <ul className='clock-list'>
         {regions.map(r => (
           <li className='clock-list__item' key={r.id}>
-            <Clock />
+            <Clock timeZone={r.timeZone} />
           </li>
         ))}
       </ul>
