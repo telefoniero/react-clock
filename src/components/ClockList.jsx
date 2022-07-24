@@ -3,40 +3,57 @@ import getTimezones from '../api/getTimezones'
 import Clock from './Clock'
 
 export default function ClockList() {
-  const [regions, setRegions] = useState([
-    {
-      id: Math.random()
-    }
-  ])
+  const [selectedRegions, setSelectedRegions] = useState([])
+  const [regions, setRegions] = useState([])
   const [region, setRegion] = useState('')
 
-  function clickHandler() {
-    const newRegion = {
-      id: Math.random(),
-      timeZone: region
-    }
-    setRegions([...regions, newRegion])
-  }
-
   useEffect(() => {
-    getTimezones(region).then(res => console.log(res))
+    if (region.length) {
+      const handler = setTimeout(
+        () => getTimezones(region).then(matched => setRegions(matched)),
+        500
+      )
+      return () => clearTimeout(handler)
+    }
   }, [region])
+
+  function clickHandler() {}
 
   return (
     <>
-      <ul className='clock-list'>
-        {regions.map(r => (
-          <li className='clock-list__item' key={r.id}>
-            <Clock timeZone={r.timeZone} />
-          </li>
-        ))}
-      </ul>
-      <input
-        type='text'
-        value={region}
-        onChange={e => setRegion(e.target.value)}
-      />
-      <button onClick={clickHandler}>Добавить</button>
+      {selectedRegions.length && (
+        <ul className='selected-regions'>
+          {selectedRegions.map(sr => (
+            <li key={sr.value} className='selected-regions__item'>
+              <Clock timeZone={sr.utc} />
+            </li>
+          ))}
+        </ul>
+      )}
+      <div className='select-region'>
+        <input
+          type='text'
+          value={region}
+          onChange={e => setRegion(e.target.value)}
+          className='select-region__input'
+        />
+        {regions.length && (
+          <ul className='select-region__options region-options'>
+            {regions.map(r => (
+              <li
+                className='region-options__item'
+                key={r.value}
+                onClick={() => {
+                  setSelectedRegions([...selectedRegions, r])
+                  setRegions([])
+                }}
+              >
+                {r.value}
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
     </>
   )
 }
