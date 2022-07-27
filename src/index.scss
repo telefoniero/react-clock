@@ -134,3 +134,22 @@ html {
     @include centerBySize(5%, 5%);
   }
 }
+
+.search-box {
+  display: inline-block;
+  position: relative;
+  &__options {
+    position: absolute;
+  }
+  &__input {
+  }
+}
+
+.options-list {
+  width: 100%;
+  overflow: hidden;
+  &__item {
+    overflow-x: scroll;
+    white-space: nowrap;
+  }
+}

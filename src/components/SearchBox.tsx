@@ -4,9 +4,15 @@ interface SearchBoxProps<T> {
   find: (search: string) => Promise<T[]>
   optionKey: string
   labelKey?: string
+  clickAction: (r: T) => void
 }
 
-const SearchBox = <T extends {[key: string]: any},>({ find, optionKey, labelKey }: SearchBoxProps<T>) => {
+const SearchBox = <T extends { [key: string]: any }>({
+  find,
+  optionKey,
+  labelKey,
+  clickAction
+}: SearchBoxProps<T>) => {
   const [search, setSearch] = useState('')
   const [options, setOptions] = useState<T[]>([])
 
@@ -21,17 +27,25 @@ const SearchBox = <T extends {[key: string]: any},>({ find, optionKey, labelKey 
   }, [search])
 
   return (
-    <div className='select-region'>
+    <div className='search-box'>
       <input
         type='text'
         value={search}
         onChange={e => setSearch(e.target.value)}
-        className='select-region__input'
+        className='search-box__input'
       />
-      {options.length && (
-        <ul className='select-region__options region-options'>
+      {!!options.length && (
+        <ul className='search-box__options options-list'>
           {options.map(r => (
-            <li className='region-options__item' key={r[optionKey]}>
+            <li
+              className='options-list__item'
+              key={r[optionKey]}
+              onClick={() => {
+                setSearch('')
+                setOptions([])
+                clickAction(r)
+              }}
+            >
               {r[labelKey ? labelKey : optionKey]}
             </li>
           ))}
